@@ -32,8 +32,14 @@ html {
 
 body {
   font-family: "Inter", sans-serif;
+}
+
+.site-wrapper {
   position: relative;
-  background-color: var(--white);
+  /* background-color: var(--white); */
+  display: flex;
+  flex-direction: column;
+  gap: 3.85rem;
 }
 
 .linear-gradient {
@@ -131,9 +137,11 @@ fieldset {
 /* Hero */
 
 .hero {
-  margin: 2rem 1.5rem;
+  /* margin: 2rem 1.5rem; */
+  margin: 0rem;
   gap: 2rem;
   overflow: hidden;
+  /* background-color: #345ff6; */
 }
 
 .hero-background {
@@ -149,6 +157,7 @@ fieldset {
     rgba(214, 252, 254, 1) 0%,
     rgba(253, 255, 255, 1) 100%
   );
+
   border-bottom-right-radius: 35px;
   border-bottom-left-radius: 35px;
 }
@@ -159,6 +168,7 @@ fieldset {
   align-items: center;
   text-align: center;
   gap: 2rem;
+  margin: 2rem 1.5rem;
 }
 
 .hero-main,
@@ -268,6 +278,28 @@ form h3 {
   gap: 1rem;
 }
 
+/* Info */
+.info {
+  width: 100vw;
+}
+
+.info-content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.info-image {
+  width: 100%;
+}
+
+.info-content-text {
+  margin: 0rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
 @media screen and (min-width: 768px) {
   /* Hero */
   .hero {
@@ -299,6 +331,20 @@ form h3 {
   .result-container {
     border-top-right-radius: 75px;
     border-bottom-right-radius: 75px;
+  }
+
+  /* Info */
+
+  .info-content {
+    flex-direction: row;
+    height: 412px;
+    width: 105%;
+    margin-left: -10%;
+  }
+
+  .info-content-text {
+    margin: 0rem;
+    gap: 2rem;
   }
 }
 @media screen and (min-width: 1440px) {
@@ -364,4 +410,31 @@ form h3 {
   .result-container {
     margin: 2rem;
   }
+
+  /* Info */
+
+  .info {
+    width: 100%;
+    /* background-color: red; */
+  }
+
+  .info-content {
+    flex-direction: row;
+    height: 585px;
+    width: 1160px;
+    margin-left: 0;
+    margin: 0 auto;
+    gap: 8.25rem;
+  }
+
+  .info-content-text {
+    margin: 0rem;
+    gap: 2rem;
+    margin-top: auto;
+    margin-bottom: 3rem;
+  }
+
+  /* .info-content-text p {
+    
+  } */
 }
