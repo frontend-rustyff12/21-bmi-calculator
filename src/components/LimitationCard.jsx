@@ -1,7 +1,11 @@
-export default function LimitationCard() {
+export default function LimitationCard({ title, description, img }) {
   return (
-    <>
-      <h2>LimitationCard goes here</h2>
-    </>
+    <article className="limitations-card">
+      <div>
+        <img src={img} alt="" />
+        <h4>{title}</h4>
+      </div>
+      <p>{description}</p>
+    </article>
   );
 }

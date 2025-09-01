@@ -326,6 +326,35 @@ form h3 {
   width: 64px;
 }
 
+/* Limitations */
+.limitations {
+  margin: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 3.5rem;
+}
+
+.limitations-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.limitations-card {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  border-radius: 1rem;
+  box-shadow: 16px 32px 50px 0px #90afd040;
+}
+
+.limitations-card div {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
 @media screen and (min-width: 768px) {
   /* Hero */
   .hero {
