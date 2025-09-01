@@ -3,8 +3,8 @@ export default function Hero() {
   return (
     <section className="hero">
       <div className="hero-background"></div>
-      <img className="logo" src="/logo.svg" alt="Comapny logo" />
       <div className="hero-main">
+        <img className="logo" src="/logo.svg" alt="Comapny logo" />
         <div className="hero-text-content">
           <h1>Body Mass Index Calculator</h1>
           <p>
