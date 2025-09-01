@@ -1,12 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
 
-/* .inter-<uniquifier> {
-  font-family: "Inter", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: <weight>;
-  font-style: normal;
-} */
-
 :root {
   --white: #ffffff;
   --black: #000000;
@@ -18,4 +11,84 @@
   --Blue-500: #345ff6;
   --Blue-300: #B33D3F1;
   --Blue-100: #e1e7fe;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+}
+
+.linear-gradient {
+  background: #d6fcfe;
+  background: linear-gradient(
+    90deg,
+    rgba(214, 252, 254, 1) 0%,
+    rgba(253, 255, 255, 1) 100%
+  );
+}
+
+/* Typography */
+h1 {
+  font-size: 3rem;
+  line-height: 110%;
+  letter-spacing: -5%;
+}
+
+h2 {
+  font-size: 2rem;
+  line-height: 110%;
+  letter-spacing: -5%;
+}
+
+h2.result {
+  font-size: 3rem;
+  line-height: 110%;
+  letter-spacing: -5%;
+  color: var(--white);
+}
+
+h3,
+h3.result {
+  font-size: 1.5rem;
+  line-height: 120%;
+  letter-spacing: -5%;
+}
+
+h3.result {
+  color: var(--Blue-500);
+}
+
+h4 {
+  font-size: 1.25rem;
+  line-height: 120%;
+  letter-spacing: -5%;
+}
+
+p {
+  font-size: 1rem;
+  line-height: 150%;
+  letter-spacing: 0%;
+}
+
+p.result {
+  font-size: 0.875rem;
+  line-height: 150%;
+  letter-spacing: 0%;
+}
+
+@media screen and (min-width: 1440px) {
+  h1 {
+    font-size: 4rem;
+  }
+
+  h2 {
+    font-size: 3rem;
+  }
+
+  h2.result {
+    font-size: 4rem;
+  }
 }
