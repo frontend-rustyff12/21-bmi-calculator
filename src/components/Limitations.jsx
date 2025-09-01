@@ -1,3 +1,5 @@
+import LimitationCard from "./LimitationCard";
+import { limitationsData } from "../data/data.js";
 export default function Limitations() {
   return (
     <section className="limitations">
@@ -10,6 +12,14 @@ export default function Limitations() {
           beneficial to use.
         </p>
       </div>
+      {limitationsData.map((item, index) => (
+        <LimitationCard
+          title={item.title}
+          img={item.img}
+          description={item.description}
+          key={index}
+        />
+      ))}
     </section>
   );
 }
