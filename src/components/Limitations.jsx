@@ -3,6 +3,7 @@ import { limitationsData } from "../data/data.js";
 export default function Limitations() {
   return (
     <section className="limitations">
+      <div className="decal"></div>
       <div className="limitations-text">
         <h2>Limitations of BMI</h2>
         <p>

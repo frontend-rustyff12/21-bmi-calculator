@@ -39,6 +39,7 @@ body {
   /* background-color: var(--white); */
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 3.85rem;
 }
 
@@ -355,6 +356,9 @@ form h3 {
   gap: 1rem;
   align-items: center;
 }
+.decal {
+  display: none;
+}
 
 @media screen and (min-width: 768px) {
   /* Hero */
@@ -448,6 +452,12 @@ form h3 {
 }
 @media screen and (min-width: 1440px) {
   /* Hero */
+  .hero,
+  .info,
+  .facts-section,
+  .limitations {
+    max-width: 1440px;
+  }
 
   .hero-background {
     left: 0;
@@ -550,5 +560,46 @@ form h3 {
 
   .fact-card div {
     gap: 1.5rem;
+  }
+
+  /* Limitations */
+  .limitations {
+    margin: 6.5rem 9rem;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 1rem;
+    position: relative;
+  }
+  .limitations-text {
+    grid-area: 1 / 1 / 2 / 7;
+    text-align: center;
+  }
+
+  .lim-card-1 {
+    grid-area: 1 / 8 / 2 / 12;
+  }
+  .lim-card-2 {
+    grid-area: 2 / 5 / 3 / 9;
+  }
+  .lim-card-3 {
+    grid-area: 2 / 9 / 3 / 13;
+  }
+  .lim-card-4 {
+    grid-area: 3 / 3 / 4 / 7;
+  }
+  .lim-card-5 {
+    grid-area: 3 / 7 / 4 / 11;
+  }
+
+  .decal {
+    display: block;
+    position: absolute;
+    background: url("/pattern-curved-line-right.svg") no-repeat;
+    width: 94px;
+    height: 122px;
+    top: 251px;
+    left: 140px;
+    z-index: 10;
   }
 }
