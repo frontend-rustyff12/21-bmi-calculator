@@ -1,21 +1,64 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
 export default function Calculator() {
   const [units, setUnits] = useState("metric");
   const [height, setHeight] = useState("");
   const [weight, setWeight] = useState("");
+  const [imperialHeight, setImperialHeight] = useState({ ft: "", in: "" });
+  const [imperialWeight, setImperialWeight] = useState({ st: "", lbs: "" });
   const [inputComplete, setInputComplete] = useState(false);
+  const [bmi, setBmi] = useState(null);
 
-  const handleUnitChange = (e) => {
-    setUnits(e.target.value);
-  };
+  useEffect(() => {
+    const isMetricComplete = units === "metric" && height && weight;
+    const isImperialComplete =
+      units === "imperial" &&
+      imperialHeight.ft &&
+      imperialHeight.in &&
+      imperialWeight.st &&
+      imperialWeight.lbs;
 
-  const handleInputChange = () => {
-    if (height && weight) {
-      setInputComplete(true);
+    setInputComplete(isMetricComplete || isImperialComplete);
+
+    if (isMetricComplete) {
+      const heightMeters = parseFloat(height) / 100;
+      const weightKg = parseFloat(weight);
+      const bmiValue = calculateBMI(heightMeters, weightKg);
+      setBmi(bmiValue);
+    } else if (isImperialComplete) {
+      const heightMeters = ftToCm(imperialHeight) / 100;
+      const weightKg = stonesAndPoundsToKg(imperialWeight);
+      const bmiValue = calculateBMI(heightMeters, weightKg);
+      setBmi(bmiValue);
     } else {
-      setInputComplete(false);
+      setBmi(null);
     }
-  };
+  }, [height, weight, imperialHeight, imperialWeight, units]);
+
+  function ftToCm({ ft, inches }) {
+    const feetConversion = parseFloat(ft || 0) * 30.48;
+    const inchesConversion = parseFloat(inches || 0) * 2.54;
+    return feetConversion + inchesConversion;
+  }
+
+  function stonesAndPoundsToKg({ st, lbs }) {
+    const totalPounds = parseFloat(st || 0) * 14 + parseFloat(lbs || 0);
+    return totalPounds / 2.20462;
+  }
+
+  function calculateBMI(heightMeters, weightKg) {
+    if (heightMeters <= 0 || weightKg <= 0) return null;
+    return (weightKg / (heightMeters * heightMeters)).toFixed(1);
+  }
+
+  function getBMICategory(bmi) {
+    if (!bmi) return "";
+    if (bmi < 18.5) return "Underweight";
+    if (bmi < 25) return "Normal";
+    if (bmi < 30) return "Overweight";
+    return "Obese";
+  }
+
   return (
     <article className="calculator">
       <form>
@@ -31,7 +74,7 @@ export default function Calculator() {
               id="metric"
               value="metric"
               checked={units === "metric"}
-              onChange={handleUnitChange}
+              onChange={(e) => setUnits(e.target.value)}
             />
             Metric
           </label>
@@ -43,56 +86,135 @@ export default function Calculator() {
               id="imperial"
               value="imperial"
               checked={units === "imperial"}
-              onChange={handleUnitChange}
+              onChange={(e) => setUnits(e.target.value)}
             />
             Imperial
           </label>
         </fieldset>
 
-        <div className="inputs">
-          <div className="input-container">
-            <label htmlFor="height">Height</label>
-            <div className="input-wrapper">
-              <input
-                type="text"
-                id="height"
-                name="height"
-                value={height}
-                onChange={(e) => {
-                  setHeight(e.target.value);
-                  handleInputChange();
-                }}
-              />
-              <h3 className="input-units">
-                {units === "metric" ? "cm" : "in"}
-              </h3>
+        {units === "metric" ? (
+          <div className="inputs">
+            <div className="input-container">
+              <label htmlFor="height">Height</label>
+              <div className="input-wrapper">
+                <input
+                  type="number"
+                  id="height"
+                  name="height"
+                  value={height}
+                  onChange={(e) => setHeight(e.target.value)}
+                  min="0"
+                  step="0.1"
+                />
+                <h3 className="input-units">cm</h3>
+              </div>
+            </div>
+            <div className="input-container">
+              <label htmlFor="weight">Weight</label>
+              <div className="input-wrapper">
+                <input
+                  type="number"
+                  id="weight"
+                  name="weight"
+                  value={weight}
+                  onChange={(e) => setWeight(e.target.value)}
+                  min="0"
+                  step="0.1"
+                />
+                <h3 className="input-units">kg</h3>
+              </div>
             </div>
           </div>
-          <div className="input-container">
-            <label htmlFor="weight">Weight</label>
-            <div className="input-wrapper">
-              <input
-                type="text"
-                id="weight"
-                name="weight"
-                value={weight}
-                onChange={(e) => {
-                  setWeight(e.target.value);
-                  handleInputChange();
-                }}
-              />
-              <h3 className="input-units">
-                {units === "metric" ? "kg" : "lbs"}
-              </h3>
+        ) : (
+          <div className="inputs imperial">
+            <div className="input-container imperial">
+              <label htmlFor="imperialHeight">Height</label>
+              <div>
+                <div className="input-wrapper">
+                  <input
+                    type="number"
+                    id="imperialHeightFt"
+                    name="imperialHeightFt"
+                    value={imperialHeight.ft}
+                    onChange={(e) =>
+                      setImperialHeight({
+                        ...imperialHeight,
+                        ft: e.target.value,
+                      })
+                    }
+                    min="0"
+                    step="1"
+                  />
+                  <h3 className="input-units">ft</h3>
+                </div>
+                <div className="input-wrapper">
+                  <input
+                    type="number"
+                    id="imperialHeightIn"
+                    name="imperialHeightIn"
+                    value={imperialHeight.in}
+                    onChange={(e) =>
+                      setImperialHeight({
+                        ...imperialHeight,
+                        in: e.target.value,
+                      })
+                    }
+                    min="0"
+                    step="0.1"
+                  />
+                  <h3 className="input-units">in</h3>
+                </div>
+              </div>
+            </div>
+            <div className="input-container imperial">
+              <label htmlFor="imperialWeight">Weight</label>
+              <div>
+                <div className="input-wrapper">
+                  <input
+                    type="number"
+                    id="imperialWeightSt"
+                    name="imperialWeightSt"
+                    value={imperialWeight.st}
+                    onChange={(e) =>
+                      setImperialWeight({
+                        ...imperialWeight,
+                        st: e.target.value,
+                      })
+                    }
+                    min="0"
+                    step="1"
+                  />
+                  <h3 className="input-units">st</h3>
+                </div>
+                <div className="input-wrapper">
+                  <input
+                    type="number"
+                    id="imperialWeightLbs"
+                    name="imperialWeightLbs"
+                    value={imperialWeight.lbs}
+                    onChange={(e) =>
+                      setImperialWeight({
+                        ...imperialWeight,
+                        lbs: e.target.value,
+                      })
+                    }
+                    min="0"
+                    step="0.1"
+                  />
+                  <h3 className="input-units">lbs</h3>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </form>
 
       <div className="result-container">
-        {inputComplete ? (
+        {inputComplete && bmi ? (
           <div>
             <p className="result-header">Your BMI is...</p>
+            <h2 className="result">{bmi}</h2>
+            <p>Your BMI suggests you're in the {getBMICategory(bmi)} range.</p>
           </div>
         ) : (
           <div>
