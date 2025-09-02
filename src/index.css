@@ -22,21 +22,19 @@
   /* border: 1px solid red; */
 }
 
-.test {
-  color: #90afd040;
-}
-
 html {
   font-size: 16px;
 }
 
 body {
   font-family: "Inter", sans-serif;
+  overflow-x: hidden;
 }
 
 .site-wrapper {
   position: relative;
-  /* background-color: var(--white); */
+  /* background-color: blue; */
+  width: 100vw;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -284,6 +282,10 @@ form h3 {
   width: 100vw;
 }
 
+.decal-info {
+  display: none;
+}
+
 .info-content {
   width: 100%;
   display: flex;
@@ -356,6 +358,7 @@ form h3 {
   gap: 1rem;
   align-items: center;
 }
+
 .decal {
   display: none;
 }
@@ -410,6 +413,7 @@ form h3 {
   /* Facts */
   .facts-section {
     padding: 3.75rem 2.625rem;
+    border-radius: 35px;
   }
 
   .fact-card {
@@ -525,6 +529,18 @@ form h3 {
   .info {
     width: 100%;
     /* background-color: red; */
+    position: relative;
+  }
+
+  .decal-info {
+    display: block;
+    position: absolute;
+    background: url("/pattern-curved-line-left.svg") no-repeat;
+    width: 85px;
+    height: 200px;
+    top: -36px;
+    right: 163px;
+    z-index: 10;
   }
 
   .info-content {
@@ -549,7 +565,6 @@ form h3 {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     margin-right: 1.5rem;
-    border-radius: 35px;
   }
 
   .fact-card {
@@ -592,7 +607,7 @@ form h3 {
     grid-area: 3 / 7 / 4 / 11;
   }
 
-  .decal {
+  .decal-limitations {
     display: block;
     position: absolute;
     background: url("/pattern-curved-line-right.svg") no-repeat;

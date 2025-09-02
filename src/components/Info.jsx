@@ -1,6 +1,7 @@
 export default function Info() {
   return (
     <section className="info">
+      <div className="decal-info"></div>
       <div className="info-content">
         <img
           className="info-image"
