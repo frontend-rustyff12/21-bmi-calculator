@@ -71,6 +71,10 @@ h2.result {
   color: var(--white);
 }
 
+.result-span {
+  font-weight: 800;
+}
+
 h3,
 h3.input-units {
   font-size: 1.5rem;

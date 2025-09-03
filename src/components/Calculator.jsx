@@ -4,50 +4,52 @@ export default function Calculator() {
   const [units, setUnits] = useState("metric");
   const [height, setHeight] = useState("");
   const [weight, setWeight] = useState("");
-  const [imperialHeight, setImperialHeight] = useState({ ft: "", in: "" });
+  const [imperialHeight, setImperialHeight] = useState({ ft: "", inches: "" });
   const [imperialWeight, setImperialWeight] = useState({ st: "", lbs: "" });
   const [inputComplete, setInputComplete] = useState(false);
   const [bmi, setBmi] = useState(null);
 
   useEffect(() => {
     const isMetricComplete = units === "metric" && height && weight;
+
     const isImperialComplete =
       units === "imperial" &&
       imperialHeight.ft &&
-      imperialHeight.in &&
+      imperialHeight.inches &&
       imperialWeight.st &&
       imperialWeight.lbs;
-
-    setInputComplete(isMetricComplete || isImperialComplete);
 
     if (isMetricComplete) {
       const heightMeters = parseFloat(height) / 100;
       const weightKg = parseFloat(weight);
-      const bmiValue = calculateBMI(heightMeters, weightKg);
-      setBmi(bmiValue);
+      const resultBmi = calculateBMI(heightMeters, weightKg);
+      setBmi(resultBmi);
+      setInputComplete(true);
     } else if (isImperialComplete) {
-      const heightMeters = ftToCm(imperialHeight) / 100;
-      const weightKg = stonesAndPoundsToKg(imperialWeight);
-      const bmiValue = calculateBMI(heightMeters, weightKg);
-      setBmi(bmiValue);
+      const convertedHeight = ftToCm(imperialHeight);
+      const convertedWeight = stonesAndPoundsToKg(imperialWeight);
+
+      const resultBmi = calculateBMI(convertedHeight, convertedWeight);
+
+      setBmi(resultBmi);
+      setInputComplete(true);
     } else {
-      setBmi(null);
+      setInputComplete(false);
     }
   }, [height, weight, imperialHeight, imperialWeight, units]);
 
   function ftToCm({ ft, inches }) {
-    const feetConversion = parseFloat(ft || 0) * 30.48;
-    const inchesConversion = parseFloat(inches || 0) * 2.54;
-    return feetConversion + inchesConversion;
+    const feetConversion = parseFloat(ft) * 30.48;
+    const inchesConversion = parseFloat(inches) * 2.54;
+    return (feetConversion + inchesConversion) / 100;
   }
 
   function stonesAndPoundsToKg({ st, lbs }) {
-    const totalPounds = parseFloat(st || 0) * 14 + parseFloat(lbs || 0);
+    const totalPounds = parseFloat(st) * 14 + parseFloat(lbs);
     return totalPounds / 2.20462;
   }
 
   function calculateBMI(heightMeters, weightKg) {
-    if (heightMeters <= 0 || weightKg <= 0) return null;
     return (weightKg / (heightMeters * heightMeters)).toFixed(1);
   }
 
@@ -152,11 +154,11 @@ export default function Calculator() {
                     type="number"
                     id="imperialHeightIn"
                     name="imperialHeightIn"
-                    value={imperialHeight.in}
+                    value={imperialHeight.inches}
                     onChange={(e) =>
                       setImperialHeight({
                         ...imperialHeight,
-                        in: e.target.value,
+                        inches: e.target.value,
                       })
                     }
                     min="0"
@@ -214,7 +216,10 @@ export default function Calculator() {
           <div>
             <p className="result-header">Your BMI is...</p>
             <h2 className="result">{bmi}</h2>
-            <p>Your BMI suggests you're in the {getBMICategory(bmi)} range.</p>
+            <p>
+              Your BMI suggests you're in the{" "}
+              <span className="result-span">{getBMICategory(bmi)}</span> range.
+            </p>
           </div>
         ) : (
           <div>
