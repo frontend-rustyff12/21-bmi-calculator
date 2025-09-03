@@ -53,6 +53,28 @@ export default function Calculator() {
     return (weightKg / (heightMeters * heightMeters)).toFixed(1);
   }
 
+  function idealWeightKg(height, bmi) {
+    const meters = height / 100;
+    const weight = bmi * (meters * meters);
+    return weight.toFixed(2);
+  }
+
+  function idealWeightSt(ft, inches, bmi) {
+    const heightInInches = ft * 12 + inches;
+
+    const weightLbs = (bmi * (heightInInches * heightInInches)) / 703;
+
+    let stones = Math.floor(weightLbs / 14);
+    let pounds = Math.round(weightLbs % 14);
+
+    if (pounds === 14) {
+      stones += 1;
+      pounds = 0;
+    }
+
+    return `${stones}st ${pounds}lbs`;
+  }
+
   function getBMICategory(bmi) {
     if (!bmi) return "";
     if (bmi < 18.5) return "Underweight";
@@ -131,7 +153,7 @@ export default function Calculator() {
           <div className="inputs imperial">
             <div className="input-container imperial">
               <label htmlFor="imperialHeight">Height</label>
-              <div>
+              <div className="imperial-container">
                 <div className="input-wrapper">
                   <input
                     type="number"
@@ -170,7 +192,7 @@ export default function Calculator() {
             </div>
             <div className="input-container imperial">
               <label htmlFor="imperialWeight">Weight</label>
-              <div>
+              <div className="imperial-container">
                 <div className="input-wrapper">
                   <input
                     type="number"
@@ -219,11 +241,36 @@ export default function Calculator() {
               <h2 className="result">{bmi}</h2>
             </div>
             <div className="res-statement">
-              <p>
-                Your BMI suggests you're in the{" "}
-                <span className="result-span">{getBMICategory(bmi)}</span>{" "}
-                range.
-              </p>
+              {units === "metric" ? (
+                <p>
+                  Your BMI suggests you're in the{" "}
+                  <span className="result-span">{getBMICategory(bmi)}</span>{" "}
+                  range. Your ideal weight is between{" "}
+                  <span className="ideal-weight">
+                    {idealWeightKg(parseFloat(height), 18.5)}kgs -{" "}
+                    {idealWeightKg(parseFloat(height), 25)}kgs
+                  </span>
+                </p>
+              ) : (
+                <p>
+                  Your BMI suggests you're in the{" "}
+                  <span className="result-span">{getBMICategory(bmi)}</span>{" "}
+                  range. Your ideal weight is between{" "}
+                  <span className="ideal-weight">
+                    {idealWeightSt(
+                      parseFloat(imperialHeight.ft),
+                      parseFloat(imperialHeight.inches),
+                      18.5
+                    )}{" "}
+                    -{" "}
+                    {idealWeightSt(
+                      parseFloat(imperialHeight.ft),
+                      parseFloat(imperialHeight.inches),
+                      25
+                    )}
+                  </span>
+                </p>
+              )}
             </div>
           </div>
         ) : (

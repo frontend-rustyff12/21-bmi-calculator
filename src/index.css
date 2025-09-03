@@ -70,7 +70,8 @@ h2.result {
   color: var(--white);
 }
 
-.result-span {
+.result-span,
+.ideal-weight {
   font-weight: 800;
 }
 
@@ -242,7 +243,7 @@ form h3 {
   gap: 0.5rem;
 }
 
-.input-container.imperial div {
+.input-container.imperial .imperial-container {
   display: flex;
   flex-direction: row;
   gap: 0.5rem;
@@ -263,6 +264,7 @@ form h3 {
   border: 1px solid var(--Blue-900);
   border-radius: 12px;
   padding: 1rem;
+  width: 100%;
 }
 
 .input-wrapper input {
@@ -412,6 +414,7 @@ form h3 {
 
   .inputs.imperial .input-container:first-of-type {
     grid-area: 1 / 1 / 2 / 3;
+    width: 100%;
   }
 
   .inputs.imperial .input-container:last-of-type {
