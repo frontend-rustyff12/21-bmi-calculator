@@ -213,13 +213,18 @@ export default function Calculator() {
 
       <div className="result-container">
         {inputComplete && bmi ? (
-          <div>
-            <p className="result-header">Your BMI is...</p>
-            <h2 className="result">{bmi}</h2>
-            <p>
-              Your BMI suggests you're in the{" "}
-              <span className="result-span">{getBMICategory(bmi)}</span> range.
-            </p>
+          <div className="res-wrapper">
+            <div className="res">
+              <p className="result-header">Your BMI is...</p>
+              <h2 className="result">{bmi}</h2>
+            </div>
+            <div className="res-statement">
+              <p>
+                Your BMI suggests you're in the{" "}
+                <span className="result-span">{getBMICategory(bmi)}</span>{" "}
+                range.
+              </p>
+            </div>
           </div>
         ) : (
           <div>
